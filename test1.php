@@ -38,3 +38,19 @@ Array
         )
 
 );*/
+$x = array_reverse($x);
+$stack = array('}');
+$result = '{';
+
+foreach($x as $v) {
+  $result .= '"'.$v.'":{';
+  array_push($stack,'}');
+}
+
+$result .= implode('',$stack);
+$x = json_decode($result,true);
+
+print_r($x);
+
+
+
