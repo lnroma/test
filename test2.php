@@ -1,7 +1,4 @@
 <?php
-/**
- * Написать функцию которая из этого массива
- */
 $data1 = [
     'parent.child.field' => 1,
     'parent.child.field2' => 2,
@@ -11,7 +8,6 @@ $data1 = [
     'parent3.child3.position' => 10,
 ];
 
-//сделает такой и наоборот
 $data = [
     'parent' => [
         'child' => [
@@ -34,3 +30,28 @@ $data = [
         ]
     ],
 ];
+
+// parse configuration 
+function parse($data1) {
+   $result = array();
+   foreach($data1 as $k => $v) {
+      list($parent,$child,$field) = explode('.',$k);
+      $result[$parent][$child][$field] = $v;
+   }
+   return $result;
+}
+
+// compile configuration
+function compile($data) {
+   $result = array();
+   foreach($data as $parent => $parentValue) {
+     foreach($parentValue as $child => $childValue) {
+       foreach($childValue as $field => $fieldValue) {
+         $result[$parent.'.'.$child.'.'.$field] = $fieldValue;
+       }
+     }
+   }
+   return $result;
+}
+var_dump(parse($data1));
+var_dump(compile($data));
